@@ -41,8 +41,8 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="shadow-2xl flex flex-col rounded-2xl p-5 gap-5 w-1/2 bg-white min-w-lg">
+    <div className="flex items-center justify-center h-screen p-5">
+      <div className="shadow-2xl flex flex-col rounded-2xl p-5 gap-5 w-1/2 bg-white max-md:w-full">
         <h1 className="text-center text-2xl font-bold">Create a New Account</h1>
         {errorMessage && (
           <p className="text-center bg-red-50 p-2 rounded-md border border-red-400 text-red-400">
