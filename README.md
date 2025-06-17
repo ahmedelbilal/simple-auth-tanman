@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 Tanman Auth App
 
-## Getting Started
+A simple and secure authentication app built for **Tanman**, featuring user registration, login, session handling with JWT, and protected routes. The app uses **Next.js App Router**, **PostgreSQL**, **Drizzle ORM**, and **Edge-compatible JWT authentication** via [`jose`](https://github.com/panva/jose).
 
-First, run the development server:
+---
+
+## ⚙️ Tech Stack
+
+- **Framework**: Next.js (App Router)
+- **Auth**: JWT (via [`jose`](https://github.com/panva/jose))
+- **Database**: PostgreSQL
+- **ORM**: Drizzle ORM
+- **Styling**: Tailwind CSS (optional)
+- **Runtime**: Edge-compatible (for fast, serverless deployment)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ahmedelbilal/simple-auth-tanman.git
+cd simple-auth-tanman
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment
+
+Create a .env file based on the provided .env.example:
+
+```bash
+cp .env.example .env
+```
+
+Update the values in .env to match your local PostgreSQL setup and JWT secret.
+
+### 4. Run Database Migrations
+
+If you're using Drizzle's migration system:
+
+```bash
+npx drizzle-kit push
+```
+
+Or manually apply SQL from db/migrations/.
+
+### 5. Start the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧪 Routes Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Method | Route                | Description                |
+| ------ | -------------------- | -------------------------- |
+| `POST` | `/api/auth/register` | Register a new user        |
+| `POST` | `/api/auth/login`    | Authenticate and set JWT   |
+| `GET`  | `/api/auth/me`       | Get current user (via JWT) |
+| `POST` | `/api/auth/logout`   | Clear session (JWT cookie) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛡️ Auth Flow Summary
 
-## Learn More
+- **Register**
 
-To learn more about Next.js, take a look at the following resources:
+  - User submits a username and password
+  - Password is hashed using `bcrypt`
+  - User data is stored in the PostgreSQL database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Login**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  - Credentials are verified
+  - A JWT is generated containing the user's `id` and `username`
+  - JWT is stored in an HTTP-only cookie for security
 
-## Deploy on Vercel
+- **Me**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - Server reads the JWT from cookies
+  - JWT is verified using a secret key
+  - If valid, the user’s `id` and `username` are returned
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Logout**
+  - JWT cookie is cleared
+  - Session is effectively ended
