@@ -1,5 +1,5 @@
 {
-  "id": "b920f8a9-c067-4067-a529-817a6ae4940e",
+  "id": "0c5f57b5-c58e-402c-9b0b-909b61e5d6d5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -43,13 +43,6 @@
           "nullsNotDistinct": false,
           "columns": [
             "username"
-          ]
-        },
-        "users_password_unique": {
-          "name": "users_password_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "password"
           ]
         }
       },
